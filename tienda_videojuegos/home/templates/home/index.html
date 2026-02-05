@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de videojuegos</title>
-</head>
-<body>
-    <h1>Bienvenido a la Tienda de Videojuegos</h1>
-    <p>Explora nuestro catálogo y disfruta</p>
+{% extends "base.html" %}
+{% load static %} <!--Con esto podremos cargar el contenido estático dentro de la carpeta static-->
 
-    <footer>
-        <p>2025 Tienda de Videojuegos</p>
-        <a href="{% url 'contacto' %}">Contacto</a>
-    </footer>
+{% block title %} Tienda de Videojuegos - Inicio {% endblock %}
 
-    
-</body>
-</html>
+{% block content %}
+
+    <div class="container mt-5">
+        <h1 class="text-light">Bienvenido a la Tienda de Videojuegos</h1>
+        <p class="text-light">Explora nuestro catálogo y disfruta de las mejores ofertas.</p>
+
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="img-fluid my-4">
+
+        <div class="alert alert-primary">¡Nueva colección de videojuegos disponible esta semana!</div>
+        <div class="alert alert-warning">Recuerda revisar las restricciones de edad para algunos títulos.</div>
+        <div class="alert alert-danger">Algunos productos tienen stock limitado, ¡apresúrate!</div>
+    </div>
+
+{% endblock %}
