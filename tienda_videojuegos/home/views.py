@@ -8,3 +8,5 @@ def index(request):
 # Vista de la página de contacto
 def contacto(request):
     return render(request, 'home/contacto.html')
+
+

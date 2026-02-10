@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Listado de juegos de Juegos{% endblock %}
+
+{% block content %} 
+    <h2 class="text-body">  Lista de Juegos</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+        {% for juego in lista_juegos %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{% static 'img/portadas/' %}{{ juego.imagen }}" class="card-img-top" 
+                    alt="Imagen genérica"><!--creamos ruta para la imagen-->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ juego.nombre }}</h5>
+                        <p class="card-text">Plataforma: {{ juego.plataforma }}</p>
+                        <p class="card-text">Precio: {{ juego.precio }} €</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+<!-- Paginación -->
+<nav aria-label="Paginación" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if lista_juegos.has_previous %} <!--El if controla los botones Primera y Anterior, habilitandoloes solo si existe una página previa (has_previous)-->
+        <li class="page-item">
+            <a class="page-link" href="?page=1">Primera</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ lista_juegos.previous_page_number }}">Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Primera</span></li>
+        <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+        {% endif %}
+
+        {% for num in lista_juegos.paginator.page_range %} <!--Recorreo ek rango de páginas (paginator.page_range) y muestra enlaces numerados, marcando como activa la página actual-->
+        {% if lista_juegos.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% elif num > lista_juegos.number|add:'-3' and num < lista_juegos.number|add:'3' %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if lista_juegos.has_next %} <!--Controla kis botones Siguiente y Última, habilitándoloes solo si existe una página siguiente (has_next)-->
+        <li class="page-item">
+            <a class="page-link" href="?page={{ lista_juegos.next_page_number }}">Siguiente</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ lista_juegos.paginator.num_pages }}">Última</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+        <li class="page-item disabled"><span class="page-link">Última</span></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}
