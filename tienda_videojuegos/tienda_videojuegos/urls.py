@@ -22,8 +22,8 @@ urlpatterns = [
     #Aquí enrutaremos con las APPs que componen la herramienta, siendo este documento de url el principal
 
     path('',include('home.urls')), # incluimos las URLs de home en la raíz
-    path('catalogo/',include('catalogo.urls')),# incluimos las URLs de catálogos
-
+    path('catalogo/',include('catalogo.urls')),# incluimos las URLs de catálogos, por lo que en base, ya solo deberemos de llamar a la vista con el name que está en la urls de catalogo
+    path('buscador/',include('buscador.urls')),
 
 
 ]
