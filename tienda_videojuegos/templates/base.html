@@ -52,7 +52,7 @@
                             <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/catalogo/' in request.path %}active{% endif %}" href="{% url 'lista_juegos' %}">Catálogo</a>
+                            <a class="nav-link {% if '/catalogo/' in request.path %}active{% endif %}" href="{% url 'catalogo:lista_juegos' %}">Catálogo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if '/noticias/' in request.path %}active{% endif %}" href="#">Noticias</a>
@@ -68,10 +68,99 @@
                             value="{{ request.GET.q|default:'' }}">
                         <button class="btn btn-outline-info" type="submit">Buscar</button>
                     </form>
+
+
+
+                    <!-- Carrito -->
+                    <ul class="navbar-nav mb-2 mb-lg-0 order-6 order-lg-5 me-3">
+                        <li class="nav-item position-relative">
+                            <a href="#" class="nav-link text-white">
+                            <div class="position-relative d-inline-block">
+                                <i class="fas fa-shopping-cart fa-lg"></i>
+                                {% if carrito_total_items > 0 %}
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger small">
+                                        {{ carrito_total_items }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                             </a>
+                        </li>
+                    </ul>
+
+                    <!-- Usuario / Invitado -->
+                    <ul class="navbar-nav mb-2 mb-lg-0 order-6 order-lg-5">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="avatar-sm rounded-circle overflow-hidden me-2"
+                                    style="width:32px; height:32px; background-color: {% if user.is_authenticated %}#FFFFFF{% else %}#eee400{% endif %};">
+                                    {% if user.is_authenticated and user.profile.avatar %}
+                                        <img src="{% static 'img/avatares/'|add:user.profile.avatar|add:'.webp' %}" 
+                                            alt="Avatar" class="rounded-circle"
+                                            style="width:100%; height:100%; object-fit:cover;">
+                                    {% else %}
+                                        <img src="{% static 'img/avatares/default.webp' %}" 
+                                            alt="Invitado" class="rounded-circle"
+                                            style="width:100%; height:100%; object-fit:cover;">
+                                    {% endif %}
+                                </div>
+                                <span class="text-white">
+                                    Hola,
+                                    {% if user.is_authenticated %}
+                                        <span class="text-danger">{{ user.username }}</span>
+                                    {% else %}
+                                        <span class="text-warning">Invitado</span>
+                                    {% endif %}
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'perfil' %}">Mi perfil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar sesión</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    <!--Mensajes dinamicso una vez que inicias sesión o sales-->
+    {% if messages %}
+    <div id="toast-container" 
+        class="toast-container position-fixed bottom-0 end-0 p-3" 
+        style="z-index: 2000;">
+        {% for message in messages %}
+        <div 
+            class="toast align-items-center border-0 show mb-2
+            {% if message.tags == 'success' %}bg-success{% endif %}
+            {% if message.tags == 'error' %}bg-danger{% endif %}
+            {% if message.tags == 'warning' %}bg-warning{% endif %}
+            {% if message.tags == 'info' %}bg-info{% endif %}
+            " 
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+            <button type="button" 
+                    class="btn-close me-2 m-auto" 
+                    data-bs-dismiss="toast" 
+                    aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+
+
 
     <!-- CONTENIDO DINÁMICO -->
     <main class="py-5 bg-body-secondary text-center text-dark d-flex justify-content-center align-items-center">
