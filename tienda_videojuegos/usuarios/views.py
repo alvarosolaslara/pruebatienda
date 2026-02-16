@@ -35,6 +35,6 @@ def logout_view(request):
     messages.info(request, "Has cerrado sesión correctamente.")
     return redirect('login')
 
-@login_required
+@login_required #solo los usuarios autenticados pueden acceder a esta vista
 def perfil_view(request):
     return render(request, 'usuarios/perfil.html')

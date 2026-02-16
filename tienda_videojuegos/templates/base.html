@@ -74,7 +74,7 @@
                     <!-- Carrito -->
                     <ul class="navbar-nav mb-2 mb-lg-0 order-6 order-lg-5 me-3">
                         <li class="nav-item position-relative">
-                            <a href="#" class="nav-link text-white">
+                            <a href="{% url 'carrito:ver_carrito' %}" class="nav-link text-white">
                             <div class="position-relative d-inline-block">
                                 <i class="fas fa-shopping-cart fa-lg"></i>
                                 {% if carrito_total_items > 0 %}
