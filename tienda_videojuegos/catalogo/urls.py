@@ -2,7 +2,7 @@ from django.urls import path
 from.import views #importamos la vistas views.py
 #aunque no tengamos ninguna url definida será obligatorio tener urlpatterns, aunque sea bacía
 
-app_name = 'catalogo'
+app_name = 'catalogo'#Se utiliza para contruir las urls de una forma más legible catalogo:
 
 urlpatterns = [ 
     path('',views.lista_juegos, name='lista_juegos'),
