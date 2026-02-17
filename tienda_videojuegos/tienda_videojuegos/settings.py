@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'home',
+    'catalogo',
+    'buscador',
+    'usuarios',
+    'carrito',
 ]
 
 MIDDLEWARE = [
@@ -54,13 +59,14 @@ ROOT_URLCONF = 'tienda_videojuegos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],#Especificaremos el directorio de las platillas base, si no el extend no funcionará
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'carrito.context_processors.carrito_total',
             ],
         },
     },
@@ -102,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'UTC'
 
@@ -115,3 +121,42 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static'] #Base Dir representar el directorio base, principal de nuestro proyecto y static la carpeta stática, no confundir con core
+
+# GENERAREMOS NUESTRO PROPIO MEDELO DE USUARIOS Y NO UTILIZAREMOS EL QUE BIENE POR DEFECTO
+# ----------------------------------------------------------------------------------------
+
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Esta línea define qué tipo de campo usará Django por defecto para las claves primarias (id) en los modelos.
+# BigAutoField crea un ID autoincrementable grande.
+# Es útil porque soporta muchos más registros que AutoField.
+# Ejemplo: en vez de que el ID sea 1,2,3... con límite pequeño, será un entero más grande (hasta billones).
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'usuarios.Usuario'
+# Esta línea le dice a Django que no use el modelo User por defecto, sino uno personalizado.
+# usuarios es el nombre de tu app
+# Usuario es el nombre del modelo dentro de models.py
+
+AUTH_USER_MODEL = 'usuarios.Usuario'
+
+# LOGIN_URL = 'login'
+# Esta línea define a qué URL redirigir cuando alguien intenta entrar a una vista protegida sin estar autenticado.
+# Ejemplo:
+# Si tienes una vista con @login_required y el usuario no ha iniciado sesión, Django lo manda a:
+
+LOGIN_URL = 'login'
+
+# LOGIN_REDIRECT_URL = 'home'
+# Esto define a dónde redirigir automáticamente al usuario después de iniciar sesión correctamente.
+# Ejemplo:
+# Si el login fue exitoso, Django lo manda a:
+
+LOGIN_REDIRECT_URL = 'home'
+
+#LOGOUT_REDIRECT_URL = 'login'
+# Esto define a dónde se redirige al usuario después de cerrar sesión.
+# Cuando haces logout, Django lo manda a:
+
+LOGOUT_REDIRECT_URL = 'login'

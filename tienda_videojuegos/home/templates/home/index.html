@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %} <!--Con esto podremos cargar el contenido estático dentro de la carpeta static-->
+
+{% block title %} Tienda de Videojuegos - Inicio {% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h1 class="text-body">Bienvenido a la Tienda de Videojuegos</h1>
+        <p class="text-body">Explora nuestro catálogo y disfruta de las mejores ofertas.</p>
+
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="img-fluid my-4">
+
+        <div class="alert alert-primary">¡Nueva colección de videojuegos disponible esta semana!</div>
+        <div class="alert alert-warning">Recuerda revisar las restricciones de edad para algunos títulos.</div>
+        <div class="alert alert-danger">Algunos productos tienen stock limitado, ¡apresúrate!</div>
+    </div>
+
+{% endblock %}
